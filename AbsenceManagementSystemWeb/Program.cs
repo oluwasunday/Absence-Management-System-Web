@@ -1,3 +1,5 @@
+using AbsenceManagementSystemWeb.Extensions;
+
 namespace AbsenceManagementSystemWeb
 {
     public class Program
@@ -8,6 +10,29 @@ namespace AbsenceManagementSystemWeb
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddHttpContextAccessor(); // configure httpcontext to be accessible in other class
+            builder.Services.AddHttpClient();
+            builder.Services.AddDependencyInjection();
+
+            builder.Services.AddSession(o =>
+            {
+                o.IdleTimeout = TimeSpan.FromSeconds(1800);
+            });
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings  
+                options.LoginPath = "/Authentication/Login";
+                options.Cookie.Name = "user";
+                options.Cookie.HttpOnly = true;
+                options.LogoutPath = "/Authentication/Logout";
+                options.AccessDeniedPath = "/Authentication/AccessDenied";
+                //options.SlidingExpiration = true;
+                options.ReturnUrlParameter = "/Home/Index";
+                options.Cookie.Expiration = TimeSpan.FromDays(1);
+                options.ExpireTimeSpan = TimeSpan.FromDays(1);
+            });
 
             var app = builder.Build();
 
@@ -25,6 +50,7 @@ namespace AbsenceManagementSystemWeb
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",

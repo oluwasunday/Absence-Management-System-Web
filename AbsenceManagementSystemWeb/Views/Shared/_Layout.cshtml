@@ -194,7 +194,31 @@
                         <img src="~/images/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" />
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+
+                        @* @if (ViewBag.LogInfo != null)
+                        {
+                            <li class="nav-item nav-link"><a href="#" class="nav-link">Welcomess @ViewBag.Username</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-action="Logout" asp-controller="Authentication">Logout</a></li>
+                        }
+                        else
+                        {
+                            <li class="nav-item"><a class="nav-link" asp-action="Login" asp-controller="Authentication">Login</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-action="Register" asp-controller="Authentication">Register</a></li>
+                        } *@
+
+                        @{
+                            var username = TempData["Username"];
+                            if(!string.IsNullOrEmpty(username.ToString()))
+                            {
+                                <a href="#" class="d-block">@username </a>
+                            }
+                            else
+                            {
+                                <a href="#" class="d-block"># --</a>
+                            }
+                        }
+                        
+
                     </div>
                 </div>
 
@@ -215,7 +239,8 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                              with font-awesome or any other icon font library -->
-                        <li class="nav-item menu-open">
+                        
+                        @* <li class="nav-item menu-open">
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
@@ -243,8 +268,113 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
-                        <li class="nav-item">
+                        </li> *@
+
+
+                        @{
+                            var role = TempData["Role"];
+                            if (!string.IsNullOrEmpty(role.ToString()) && role.ToString() == "Admin")
+                            {
+                                <li class="nav-item">
+                                    <a href="./index.html" class="nav-link active">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Dashboard</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fas fa-copy"></i>
+                                        <p>
+                                            Employees
+                                            <i class="fas fa-angle-left right"></i>
+                                            <span class="badge badge-info right">6</span>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="pages/layout/top-nav.html" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>All Employees</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Add Employees</p>
+                                            </a>
+                                        </li>
+                                        
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fas fa-copy"></i>
+                                        <p>
+                                            Leave
+                                            <i class="fas fa-angle-left right"></i>
+                                            <span class="badge badge-info right">6</span>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="pages/layout/top-nav.html" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Dashboard</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Employees on Leave</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="pages/layout/top-nav.html" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Review</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Leave types</p>
+                                            </a>
+                                        </li>
+                                        
+                                    </ul>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a href="./index.html" class="nav-link active">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Dashboard</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="pages/layout/top-nav.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>My leave</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Apply for leave</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="pages/layout/boxed.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Leave Entitlement</p>
+                                    </a>
+                                </li>
+                            }
+                        }
+
+
+                        @* <li class="nav-item">
                             <a href="pages/widgets.html" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
@@ -312,8 +442,8 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
-                        <li class="nav-item">
+                        </li> *@
+                        @* <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-chart-pie"></i>
                                 <p>
@@ -347,8 +477,8 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
-                        <li class="nav-item">
+                        </li> *@
+                        @* <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tree"></i>
                                 <p>
@@ -496,8 +626,8 @@
                                     Kanban Board
                                 </p>
                             </a>
-                        </li>
-                        <li class="nav-item">
+                        </li> *@
+                        @* <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon far fa-envelope"></i>
                                 <p>
@@ -748,8 +878,8 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
-                        <li class="nav-header">MISCELLANEOUS</li>
+                        </li> *@
+                        @* <li class="nav-header">MISCELLANEOUS</li>
                         <li class="nav-item">
                             <a href="iframe.html" class="nav-link">
                                 <i class="nav-icon fas fa-ellipsis-h"></i>
@@ -846,7 +976,7 @@
                                 <p>Informational</p>
                             </a>
                         </li>
-                    </ul>
+                    </ul> *@
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>
