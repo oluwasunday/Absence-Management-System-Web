@@ -1,5 +1,8 @@
-﻿using AbsenceManagementSystemWeb.Models;
+﻿using AbsenceManagementSystem.Model.DTOs;
+using AbsenceManagementSystem.Model.ViewModels;
+using AbsenceManagementSystemWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace AbsenceManagementSystemWeb.Controllers
@@ -13,9 +16,16 @@ namespace AbsenceManagementSystemWeb.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(AdminDashboard data)
         {
-            return View();
+            var authenticatedUser = HttpContext.Session.GetString("User");
+            if (authenticatedUser == null)
+            {
+                return RedirectToAction("Login", "Authentication");
+            }
+            var user = authenticatedUser != null ? JsonConvert.DeserializeObject<AuthenticatedUserDto>(authenticatedUser) : null;
+
+            return View(data);
         }
 
         public IActionResult Privacy()
