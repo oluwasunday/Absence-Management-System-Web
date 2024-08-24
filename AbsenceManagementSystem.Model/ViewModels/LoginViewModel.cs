@@ -15,12 +15,4 @@ namespace AbsenceManagementSystem.Model.ViewModels
         public IEnumerable<Claim> Claims { get; set; }
         public AdminDashboard AdminDashboard { get; set; }
     }
-    public class AdminDashboard
-    {
-        public string UserId { get; set; }
-        public int NumberOfEmployees { get; set; }
-        public int EmployeesOnCasualLeave { get; set; }
-        public int EmployeesOnSickLeave { get; set; }
-        public int PendingLeave { get; set; }
-    }
 }

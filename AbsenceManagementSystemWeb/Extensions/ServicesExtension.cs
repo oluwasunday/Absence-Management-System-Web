@@ -11,7 +11,7 @@ namespace AbsenceManagementSystemWeb.Extensions
             // Add Repository Injections Here 
             services.AddSingleton<IHttpRequestFactory, HttpRequestFactory>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
-
+            services.AddScoped<IEmployeeService, EmployeeService>();
         }
     }
 }

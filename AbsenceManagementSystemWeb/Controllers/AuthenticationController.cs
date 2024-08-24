@@ -53,12 +53,15 @@ namespace AbsenceManagementSystemWeb.Controllers
 
                 ViewBag.UserInfo = user;
 
-                var Role = result.Claims.ElementAt(4).Value;
+                var role = result.Claims.ElementAt(4).Value;
                 HttpContext.Session.SetString("User", JsonConvert.SerializeObject(user));
+                HttpContext.Session.SetString("Username", user.FirstName);
+                HttpContext.Session.SetString("UserRole", role);
+                HttpContext.Session.SetString("PageTitle", "Dashboard");
 
                 TempData["Username"] = $"{user.FirstName}";
-                TempData["Role"] = $"{Role}";
-                if (Role == null)
+                TempData["Role"] = $"{role}";
+                if (role == null)
                 {
                     ModelState.AddModelError(string.Empty, "Unable to log you in at this time.");
                     return View();

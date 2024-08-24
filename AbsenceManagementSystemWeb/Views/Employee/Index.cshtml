@@ -1,0 +1,113 @@
+﻿@model AbsenceManagementSystem.Model.ViewModels.EmployeeViewModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="row">
+    <div class="col-lg-10">
+
+        @* TODO: to integrate later *@
+        @* <div class="card">
+        <div class="card-header border-0">
+        <div class="d-flex justify-content-between">
+        <h3 class="card-title">Online Store Visitors</h3>
+        <a href="javascript:void(0);">View Report</a>
+        </div>
+        </div>
+        <div class="card-body">
+        <div class="d-flex">
+        <p class="d-flex flex-column">
+        <span class="text-bold text-lg">820</span>
+        <span>Visitors Over Time</span>
+        </p>
+        <p class="ml-auto d-flex flex-column text-right">
+        <span class="text-success">
+        <i class="fas fa-arrow-up"></i> 12.5%
+        </span>
+        <span class="text-muted">Since last week</span>
+        </p>
+        </div>
+        <!-- /.d-flex -->
+
+        <div class="position-relative mb-4">
+        <canvas id="visitors-chart" height="200"></canvas>
+        </div>
+
+        <div class="d-flex flex-row justify-content-end">
+        <span class="mr-2">
+        <i class="fas fa-square text-primary"></i> This Week
+        </span>
+
+        <span>
+        <i class="fas fa-square text-gray"></i> Last Week
+        </span>
+        </div>
+        </div>
+        </div> *@
+        <!-- /.card -->
+
+        <div class="card">
+            <div class="card-header border-0">
+                @* <h3 class="card-title">Employees</h3> *@
+                <div class="card-tools">
+                    <a href="#" class="btn btn-tool btn-sm">
+                        <i class="fas fa-download"></i>
+                    </a>
+                    <a href="#" class="btn btn-tool btn-sm">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-striped table-valign-middle">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Contract Type</th>
+                            <th>No. of Leave Entitled</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var employee in Model.Employees)
+                        {
+                            <tr>
+                                <td>
+                                    @employee.FirstName @employee.LastName
+                                </td>
+                                <td>@employee.Email</td>
+                                <td>
+                                    @employee.PhoneNumber
+                                </td>
+                                <td>
+                                    @employee.ContractType.ToString()
+                                </td>
+                                <td>
+                                    @employee.TotalHolidayEntitlement
+                                </td>
+                                <td>
+                                    <span>
+                                        <a asp-controller="Employee" asp-action="GetEmployeeById" asp-route-roomTypeId="@employee.EmployeeId"><i class="fas fa-search"></i></a>
+                                        <a href="#" class="text-muted">
+                                            <i class="fas fa-search"></i>
+                                        </a>
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
