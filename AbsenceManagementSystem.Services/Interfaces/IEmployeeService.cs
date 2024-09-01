@@ -7,5 +7,6 @@ namespace AbsenceManagementSystem.Services.Interfaces
     {
         Task<IEnumerable<EmployeeDto>> GetEmployeesAsync();
         Task<Response<EmployeeDto>> AddNewEmployeeAsync(EmployeeDto employee);
+        Task<IEnumerable<EmployeeDto>> GetEmployeeLeavesByEmployeeIdAsync(string employeeId);
     }
 }

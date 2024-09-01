@@ -11,4 +11,19 @@ namespace AbsenceManagementSystem.Model.Enums
         PartTime,
         FullTime
     }
+    public enum LeaveStatus
+    {
+        Pending = 0,
+        Approved,
+        Cancelled
+    }
+    public enum LeaveTypes
+    {
+        Unpaid = 0,
+        CasualLeave,
+        SickLeave,
+        Vacation,
+        Maternity,
+        Paternity
+    }
 }

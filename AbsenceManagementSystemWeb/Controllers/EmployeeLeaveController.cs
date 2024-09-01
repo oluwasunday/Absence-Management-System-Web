@@ -8,39 +8,51 @@ using System.Diagnostics;
 
 namespace AbsenceManagementSystemWeb.Controllers
 {
-    public class EmployeeController : Controller
+    public class EmployeeLeaveController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IEmployeeService _employeeService;
+        private readonly IEmployeeLeaveService _employeeLeaveService;
 
-        public EmployeeController(ILogger<HomeController> logger, IEmployeeService employeeService)
+        public EmployeeLeaveController(ILogger<HomeController> logger, IEmployeeLeaveService employeeLeaveService)
         {
             _logger = logger;
-            _employeeService = employeeService;
+            _employeeLeaveService = employeeLeaveService;
         }
 
         public async Task<IActionResult> Index()
         {
-            HttpContext.Session.SetString("PageTitle", "Employees");
-            var employees = await _employeeService.GetEmployeesAsync();
-            if (employees != null)
+            HttpContext.Session.SetString("PageTitle", "EmployeeLeaves");
+            var requests = await _employeeLeaveService.GetAllLeaveRequest();
+            if (requests != null)
             {
-                
-                return View(new EmployeeViewModel { Employees = employees.ToList() });
+                return View(new EmployeeLeaveViewModel { EmployeeLeaveRequests = requests.ToList() });
             }
 
             return View();
         }
 
-        [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> AllPendingLeaveRequests()
         {
+            HttpContext.Session.SetString("PageTitle", "EmployeeLeaves");
+            var requests = await _employeeLeaveService.GetAllPendingLeaveRequest();
+            if (requests != null)
+            {
+                return View(new EmployeeLeaveViewModel { EmployeeLeaveRequests = requests.ToList() });
+            }
+
             return View();
         }
 
-        public IActionResult AddNewEmployee()
+        [HttpPost]
+        public async Task<IActionResult> UpdateLeaveRequest(UpdateLeaveRequesDto dto)
         {
-            HttpContext.Session.SetString("PageTitle", "Employees");
+            HttpContext.Session.SetString("PageTitle", "EmployeeLeaves");
+            var response = await _employeeLeaveService.UpdateLeaveRequests(dto);
+            if (response != null)
+            {
+                return View(new Response<bool> { Data = response });
+            }
+
             return View();
         }
 /*
@@ -50,7 +62,7 @@ namespace AbsenceManagementSystemWeb.Controllers
             return View();
         }*/
 
-        [HttpPost]
+       /* [HttpPost]
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> AddNewEmployee(EmployeeDto employee)
         {
@@ -68,15 +80,7 @@ namespace AbsenceManagementSystemWeb.Controllers
                 return View();
             }
             return RedirectToAction("Error");
-        }
-
-        public async Task<IActionResult> EmployeeLeaves(string employeeId)
-        {
-            var id = employeeId;
-            var response = await _employeeService.GetEmployeeLeavesByEmployeeIdAsync(employeeId);
-            HttpContext.Session.SetString("PageTitle", "Employees");
-            return View(response);
-        }
+        }*/
 
         public IActionResult Privacy()
         {

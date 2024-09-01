@@ -35,7 +35,7 @@ namespace AbsenceManagementSystemWeb.Controllers
             var employees = await _employeeService.GetEmployeesAsync();
             if (employees != null)
             {
-                data.Employees = employees.ToList();
+                data.Employees = employees.Take(5).OrderByDescending(x => x.DateCreated).ToList();
             }
 
             if(user != null)

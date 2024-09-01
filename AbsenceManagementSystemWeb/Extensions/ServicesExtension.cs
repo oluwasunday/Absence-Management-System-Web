@@ -12,6 +12,7 @@ namespace AbsenceManagementSystemWeb.Extensions
             services.AddSingleton<IHttpRequestFactory, HttpRequestFactory>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IEmployeeLeaveService, EmployeeLeaveService>();
         }
     }
 }

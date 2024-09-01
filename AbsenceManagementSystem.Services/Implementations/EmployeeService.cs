@@ -8,6 +8,7 @@ namespace AbsenceManagementSystem.Services.Implementations
     {
         private readonly IHttpRequestFactory _requestFactory;
         private const string baseUrl = "api/Employees";
+        //private const string leaveBaseUrl = "api/LeaveRequests";
 
         public EmployeeService(IHttpRequestFactory requestFactory)
         {
@@ -17,6 +18,14 @@ namespace AbsenceManagementSystem.Services.Implementations
         public async Task<IEnumerable<EmployeeDto>> GetEmployeesAsync()
         {
             var response = await _requestFactory.GetRequestAsync<Response<IEnumerable<EmployeeDto>>>(requestUrl: baseUrl);
+
+            return response.Data;
+        }
+
+        public async Task<IEnumerable<EmployeeDto>> GetEmployeeLeavesByEmployeeIdAsync(string employeeId)
+        {
+            string leaveBaseUrl = $"api/LeaveRequests/{employeeId}";
+            var response = await _requestFactory.GetRequestAsync<Response<IEnumerable<EmployeeDto>>>(requestUrl: leaveBaseUrl);
 
             return response.Data;
         }

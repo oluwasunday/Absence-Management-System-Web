@@ -7,13 +7,22 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="AddNewEmployee">
+        @{
+            var error = ViewBag.Error;
+
+            if(error != null)
+            {
+                <p style="color:maroon;">@error</p>
+            }
+        }
+        
+        <form method="post" asp-action="AddNewEmployee">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="EmployeeId" class="control-label"></label>
                 <input asp-for="EmployeeId" class="form-control" />
                 <span asp-validation-for="EmployeeId" class="text-danger"></span>
-            </div>
+            </div> *@
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
                 <input asp-for="FirstName" class="form-control" />
@@ -79,7 +88,7 @@
                 <input asp-for="TotalHolidayEntitlement" class="form-control" />
                 <span asp-validation-for="TotalHolidayEntitlement" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="DateCreated" class="control-label"></label>
                 <input asp-for="DateCreated" class="form-control" />
                 <span asp-validation-for="DateCreated" class="text-danger"></span>
@@ -88,7 +97,7 @@
                 <label asp-for="DateModified" class="control-label"></label>
                 <input asp-for="DateModified" class="form-control" />
                 <span asp-validation-for="DateModified" class="text-danger"></span>
-            </div>
+            </div> *@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

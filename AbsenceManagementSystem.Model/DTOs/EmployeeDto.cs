@@ -5,11 +5,13 @@ namespace AbsenceManagementSystem.Model.DTOs
 {
     public class EmployeeDto
     {
-        public string EmployeeId { get; set; }
+        public string EmployeeId { get; set; } = Guid.NewGuid().ToString();
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string Gender { get; set; }
@@ -21,6 +23,6 @@ namespace AbsenceManagementSystem.Model.DTOs
         public DateTime? EndDate { get; set; }
         public int TotalHolidayEntitlement { get; set; }
         public DateTime DateCreated { get; set; } = DateTime.Now;
-        public DateTime DateModified { get; set; }
+        public DateTime DateModified { get; set; } = DateTime.Now;
     }
 }

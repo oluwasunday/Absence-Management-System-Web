@@ -195,17 +195,6 @@
                     </div>
                     <div class="info">
 
-                        @* @if (ViewBag.LogInfo != null)
-                        {
-                            <li class="nav-item nav-link"><a href="#" class="nav-link">Welcomess @ViewBag.Username</a></li>
-                            <li class="nav-item"><a class="nav-link" asp-action="Logout" asp-controller="Authentication">Logout</a></li>
-                        }
-                        else
-                        {
-                            <li class="nav-item"><a class="nav-link" asp-action="Login" asp-controller="Authentication">Login</a></li>
-                            <li class="nav-item"><a class="nav-link" asp-action="Register" asp-controller="Authentication">Register</a></li>
-                        } *@
-
                         @{
                             var username = Context.Session.GetString("Username");
                             if(!string.IsNullOrEmpty(username?.ToString()))
@@ -213,7 +202,6 @@
                                 <a href="#" class="d-block">@username </a>
                             }
                         }
-
 
                     </div>
                 </div>
@@ -270,6 +258,7 @@
                                         </li>
                                         <li class="nav-item">
                                             <a asp-controller="Employee" asp-action="AddNewEmployee" class="nav-link">
+                                                
                                                 <i class="far fa-circle nav-icon"></i>
                                                 <p>Add Employees</p>
                                             </a>
@@ -287,24 +276,24 @@
                                         </p>
                                     </a>
                                     <ul class="nav nav-treeview">
-                                        <li class="nav-item">
+                                        @*<li class="nav-item">
                                             <a href="pages/layout/top-nav.html" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
                                                 <p>Dashboard</p>
                                             </a>
-                                        </li>
+                                        </li>*@
                                         <li class="nav-item">
-                                            <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                                            <a asp-controller="EmployeeLeave" asp-action="Index" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
                                                 <p>Employees on Leave</p>
                                             </a>
                                         </li>
-                                        <li class="nav-item">
+                                        @*<li class="nav-item">
                                             <a href="pages/layout/top-nav.html" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
                                                 <p>Review</p>
                                             </a>
-                                        </li>
+                                        </li>*@
                                         <li class="nav-item">
                                             <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
@@ -314,15 +303,21 @@
                                         
                                     </ul>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Log Out</p>
+                                    </a>
+                                </li>
                             }
                             else
                             {
-                                <li class="nav-item">
+                                @*<li class="nav-item">
                                     <a href="./index.html" class="nav-link active">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Dashboard</p>
                                     </a>
-                                </li>
+                                </li>*@
                                 <li class="nav-item">
                                     <a href="pages/layout/top-nav.html" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
@@ -339,6 +334,12 @@
                                     <a href="pages/layout/boxed.html" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Leave Entitlement</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Log Out</p>
                                     </a>
                                 </li>
                             }
