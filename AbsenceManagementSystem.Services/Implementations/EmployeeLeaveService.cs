@@ -36,7 +36,7 @@ namespace AbsenceManagementSystem.Services.Implementations
             return response.Data;
         }
 
-        public async Task<Response<EmployeeDto>> AddNewEmployeeAsync(EmployeeDto employee)
+        /*public async Task<Response<EmployeeDto>> AddNewEmployeeAsync(EmployeeDto employee)
         {
             try
             {
@@ -53,7 +53,33 @@ namespace AbsenceManagementSystem.Services.Implementations
                     Succeeded = false
                 };
             }
+        }*/
 
+        public async Task<Response<EmployeeDto>> RequestNewLeaveAsync(EmployeeLeaveRequestDto request)
+        {
+            try
+            {
+                var response = await _requestFactory.PostRequestAsync<EmployeeLeaveRequestDto, Response<EmployeeDto>>(
+                   requestUrl: baseUrl, request);
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return new Response<EmployeeDto>
+                {
+                    Message = $"{ex.Message} - {ex.StackTrace}",
+                    Succeeded = false
+                };
+            }
+        }
+
+        public async Task<IEnumerable<EmployeeLeaveRequesResponseDto>> GetEmployeeLeavesByEmployeeIdAsync(string employeeId)
+        {
+            string leaveBaseUrl = $"api/LeaveRequests/{employeeId}";
+            var response = await _requestFactory.GetRequestAsync<Response<IEnumerable<EmployeeLeaveRequesResponseDto>>>(requestUrl: leaveBaseUrl);
+
+            return response.Data;
         }
     }
 }

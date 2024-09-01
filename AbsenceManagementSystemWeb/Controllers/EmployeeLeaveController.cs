@@ -1,9 +1,11 @@
 ﻿using AbsenceManagementSystem.Model.DTOs;
 using AbsenceManagementSystem.Model.Utilities;
 using AbsenceManagementSystem.Model.ViewModels;
+using AbsenceManagementSystem.Services.Implementations;
 using AbsenceManagementSystem.Services.Interfaces;
 using AbsenceManagementSystemWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace AbsenceManagementSystemWeb.Controllers
@@ -55,32 +57,55 @@ namespace AbsenceManagementSystemWeb.Controllers
 
             return View();
         }
-/*
-        public IActionResult AddEmployee()
-        {
-            HttpContext.Session.SetString("PageTitle", "Employees");
-            return View();
-        }*/
+        /*
+                public IActionResult AddEmployee()
+                {
+                    HttpContext.Session.SetString("PageTitle", "Employees");
+                    return View();
+                }*/
 
-       /* [HttpPost]
+        public async Task<IActionResult> AddNewEmployee()
+        {
+            HttpContext.Session.SetString("PageTitle", "Add Employees");
+            
+            return View();
+        }
+
+        [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> AddNewEmployee(EmployeeDto employee)
+        public async Task<IActionResult> AddNewEmployee(EmployeeLeaveRequestDto request)
         {
             HttpContext.Session.SetString("PageTitle", "Employees");
             if (ModelState.IsValid)
             {
-                var response = await _employeeService.AddNewEmployeeAsync(employee);
+                var response = await _employeeLeaveService.RequestNewLeaveAsync(request);
                 if (response.Succeeded)
                 {
                     ViewBag.Error = null;
-                    return RedirectToAction("Index", "Employee");
+                    return RedirectToAction("EmployeeLeaves");
                 }
 
                 ViewBag.Error = response.Message;
                 return View();
             }
             return RedirectToAction("Error");
-        }*/
+        }
+
+        public async Task<IActionResult> EmployeeLeaves()
+        {
+            var authenticatedUser = HttpContext.Session.GetString("User");
+            var user = authenticatedUser != null ? JsonConvert.DeserializeObject<AuthenticatedUserDto>(authenticatedUser) : null;
+            if (user == null)
+                return RedirectToAction("Login", "Authentication");
+
+            var response = await _employeeLeaveService.GetEmployeeLeavesByEmployeeIdAsync(user.Id);
+            if (response != null)
+            {
+                return View(new EmployeeLeaveRequestViewModel { Requests = response.ToList() });
+            }
+            HttpContext.Session.SetString("PageTitle", "Employees");
+            return View(response);
+        }
 
         public IActionResult Privacy()
         {
