@@ -64,7 +64,7 @@ namespace AbsenceManagementSystemWeb.Controllers
                     return View();
                 }*/
 
-        public async Task<IActionResult> AddNewEmployee()
+        public async Task<IActionResult> AddNewLeaveRequest()
         {
             HttpContext.Session.SetString("PageTitle", "Add Employees");
             
@@ -73,11 +73,16 @@ namespace AbsenceManagementSystemWeb.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> AddNewEmployee(EmployeeLeaveRequestDto request)
+        public async Task<IActionResult> AddNewLeaveRequest(EmployeeLeaveRequestDto request)
         {
-            HttpContext.Session.SetString("PageTitle", "Employees");
+            var authenticatedUser = HttpContext.Session.GetString("User");
+            var user = authenticatedUser != null ? JsonConvert.DeserializeObject<AuthenticatedUserDto>(authenticatedUser) : null;
+            if (user == null)
+                return RedirectToAction("Login", "Authentication");
+
             if (ModelState.IsValid)
             {
+                request.EmployeeId = user.Id;
                 var response = await _employeeLeaveService.RequestNewLeaveAsync(request);
                 if (response.Succeeded)
                 {
@@ -93,6 +98,8 @@ namespace AbsenceManagementSystemWeb.Controllers
 
         public async Task<IActionResult> EmployeeLeaves()
         {
+            HttpContext.Session.SetString("PageTitle", "Employee Leave Requests");
+
             var authenticatedUser = HttpContext.Session.GetString("User");
             var user = authenticatedUser != null ? JsonConvert.DeserializeObject<AuthenticatedUserDto>(authenticatedUser) : null;
             if (user == null)
@@ -103,7 +110,6 @@ namespace AbsenceManagementSystemWeb.Controllers
             {
                 return View(new EmployeeLeaveRequestViewModel { Requests = response.ToList() });
             }
-            HttpContext.Session.SetString("PageTitle", "Employees");
             return View(response);
         }
 
