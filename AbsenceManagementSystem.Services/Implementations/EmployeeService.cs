@@ -1,5 +1,6 @@
 ﻿using AbsenceManagementSystem.Model.DTOs;
 using AbsenceManagementSystem.Model.Utilities;
+using AbsenceManagementSystem.Model.ViewModels;
 using AbsenceManagementSystem.Services.Interfaces;
 
 namespace AbsenceManagementSystem.Services.Implementations
@@ -48,6 +49,21 @@ namespace AbsenceManagementSystem.Services.Implementations
                 };
             }
             
+        }
+
+        public async Task<EmployeeDashboardDto> GetEmployeeDashboardInfoAsync()
+        {
+            var response = await _requestFactory.GetRequestAsync<Response<EmployeeDashboardDto>>(requestUrl: baseUrl + "/employeedashboard");
+
+            return response.Data;
+        }
+
+        public async Task<List<EmployeeLeavePredictResponse>> EmployeesToGoOnLeaveSoon()
+        {
+            string apiUrl = $"api/AbsencePrediction";
+            var response = await _requestFactory.GetRequestAsync<List<EmployeeLeavePredictResponse>>(requestUrl: apiUrl);
+
+            return response;
         }
     }
 }

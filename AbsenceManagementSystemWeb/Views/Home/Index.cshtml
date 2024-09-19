@@ -22,9 +22,10 @@
                 <p>No of Employees</p>
             </div>
             <div class="icon">
-                <i class="ion ion-bag"></i>
+                @* <i class="ion ion-bag"></i> *@
+                <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            @* <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> *@
         </div>
     </div>
     <!-- ./col -->
@@ -37,9 +38,10 @@
                 <p>Employees on Casual Leave</p>
             </div>
             <div class="icon">
-                <i class="ion ion-stats-bars"></i>
+                @* <i class="ion ion-stats-bars"></i> *@
+                <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            @* <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> *@
         </div>
     </div>
     <!-- ./col -->
@@ -54,7 +56,7 @@
             <div class="icon">
                 <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            @* <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> *@
         </div>
     </div>
     <!-- ./col -->
@@ -69,7 +71,7 @@
             <div class="icon">
                 <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            @* <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> *@
         </div>
     </div>
     <!-- ./col -->
@@ -229,16 +231,33 @@
             <div class="card-header border-0">
                 <h3 class="card-title">Top 5 Employees likely to go on leave</h3>
                 <div class="card-tools">
-                    <a href="#" class="btn btn-sm btn-tool">
+                    @* <a href="#" class="btn btn-sm btn-tool">
                         <i class="fas fa-download"></i>
                     </a>
                     <a href="#" class="btn btn-sm btn-tool">
                         <i class="fas fa-bars"></i>
-                    </a>
+                    </a> *@
                 </div>
             </div>
+
             <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+                @foreach (var employee in Model.EmployeesToGoOnLeaveSoon)
+                {
+                    <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+                        <p class="text-success text-xl">
+                            <i class="ion ion-ios-refresh-empty"></i>
+                        </p>
+                        <p class="d-flex flex-column text-right">
+                            <span class="font-weight-bold">
+                                <i class="ion ion-android-arrow-up text-success"></i> 12%
+                            </span>
+                            <span class="text-muted">@employee.EmployeeName</span>
+                        </p>
+                    </div>
+                    <!-- /.d-flex -->
+                }
+
+                @* <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
                     <p class="text-success text-xl">
                         <i class="ion ion-ios-refresh-empty"></i>
                     </p>
@@ -248,9 +267,9 @@
                         </span>
                         <span class="text-muted">CONVERSION RATE</span>
                     </p>
-                </div>
+                </div> *@
                 <!-- /.d-flex -->
-                <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+                @* <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
                     <p class="text-warning text-xl">
                         <i class="ion ion-ios-cart-outline"></i>
                     </p>
@@ -260,9 +279,9 @@
                         </span>
                         <span class="text-muted">SALES RATE</span>
                     </p>
-                </div>
+                </div> *@
                 <!-- /.d-flex -->
-                <div class="d-flex justify-content-between align-items-center mb-0">
+                @* <div class="d-flex justify-content-between align-items-center mb-0">
                     <p class="text-danger text-xl">
                         <i class="ion ion-ios-people-outline"></i>
                     </p>
@@ -272,7 +291,7 @@
                         </span>
                         <span class="text-muted">REGISTRATION RATE</span>
                     </p>
-                </div>
+                </div> *@
                 <!-- /.d-flex -->
             </div>
         </div>

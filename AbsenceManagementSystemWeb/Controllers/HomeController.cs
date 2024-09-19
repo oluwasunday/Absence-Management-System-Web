@@ -48,6 +48,41 @@ namespace AbsenceManagementSystemWeb.Controllers
                 data.Role = role;
             }
 
+            var employeesToGoOnLeaveSoon = await _employeeService.EmployeesToGoOnLeaveSoon();
+            if(employeesToGoOnLeaveSoon != null)
+            {
+                data.EmployeesToGoOnLeaveSoon = employeesToGoOnLeaveSoon;
+            }
+
+            return View(data);
+        }
+
+        public async Task<IActionResult> EmployeeDashboard()
+        {
+            EmployeeDashboard data = new();
+
+            var username = HttpContext.Session.GetString("Username");
+            var authenticatedUser = HttpContext.Session.GetString("User");
+            var role = HttpContext.Session.GetString("UserRole");
+            HttpContext.Session.SetString("PageTitle", "Dashboard");
+
+            if (authenticatedUser == null)
+            {
+                return RedirectToAction("Login", "Authentication");
+            }
+            var user = authenticatedUser != null ? JsonConvert.DeserializeObject<AuthenticatedUserDto>(authenticatedUser) : null;
+
+            var employees = await _employeeService.GetEmployeeDashboardInfoAsync();
+            if (employees != null)
+            {
+                data.LeaveRecords = employees.LeaveRecords;
+            }
+
+            if(user != null)
+            {
+                data.TotalLeaveRemaining = employees.TotalLeaveRemaining;
+            }
+
             return View(data);
         }
 

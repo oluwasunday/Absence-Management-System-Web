@@ -13,7 +13,8 @@ namespace AbsenceManagementSystem.Model.Enums
     }
     public enum LeaveStatus
     {
-        Pending = 0,
+        Rejected = 0,
+        Pending,
         Approved,
         Cancelled
     }

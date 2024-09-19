@@ -25,4 +25,24 @@ namespace AbsenceManagementSystem.Model.DTOs
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public DateTime DateModified { get; set; } = DateTime.Now;
     }
+
+    public class EmployeeDashboardDto
+    {
+        public int TotalLeaveRemaining { get; set; }
+        public List<EmployeeLeaveRequesResponse2Dto> LeaveRecords { get; set; }
+    }
+
+    public class EmployeeLeaveRequesResponse2Dto
+    {
+        public string Id { get; set; }
+        public string EmployeeId { get; set; }
+        public string EmployeeName { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public DateTime RequestDate { get; set; }
+        public int NumberOfDaysOff { get; set; }
+        public LeaveTypes LeaveType { get; set; }
+        public LeaveStatus Status { get; set; }
+        public bool WillBeAbsent { get; set; }
+    }
 }

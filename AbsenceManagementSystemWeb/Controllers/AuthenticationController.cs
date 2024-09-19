@@ -2,6 +2,7 @@
 using AbsenceManagementSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Data;
 
 namespace AbsenceManagementSystemWeb.Controllers
 {
@@ -66,9 +67,13 @@ namespace AbsenceManagementSystemWeb.Controllers
                     ModelState.AddModelError(string.Empty, "Unable to log you in at this time.");
                     return View();
                 }
-                else
+                else if (role.ToLower() == "admin")
                 {
                     return RedirectToAction("Index", "Home", result.AdminDashboard);
+                }
+                else
+                {
+                    return RedirectToAction("EmployeeDashboard", "Home", result?.AdminDashboard);
                 }
             }
             ViewBag.Error = "Error occur, pls check all required fields and try again";
@@ -79,13 +84,17 @@ namespace AbsenceManagementSystemWeb.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            Response.Cookies.Delete("HotelUser");
             Response.Cookies.Delete("User");
             if (Request.Cookies["user"] != null)
             {
                 Response.Cookies.Delete("user");
             }
             HttpContext.Session.Remove("User");
+
+            HttpContext.Session.Remove("User");
+            HttpContext.Session.Remove("Username");
+            HttpContext.Session.Remove("UserRole");
+            HttpContext.Session.Remove("PageTitle");
             return RedirectToAction("Login", "Authentication");
         }
     }
