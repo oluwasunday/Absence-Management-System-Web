@@ -53,6 +53,10 @@ namespace AbsenceManagementSystemWeb.Controllers
             {
                 data.EmployeesToGoOnLeaveSoon = employeesToGoOnLeaveSoon ?? new List<EmployeeLeavePredictResponse>();
             }
+            else
+            {
+                data.EmployeesToGoOnLeaveSoon =  new List<EmployeeLeavePredictResponse>();
+            }
 
             return View(data);
         }
