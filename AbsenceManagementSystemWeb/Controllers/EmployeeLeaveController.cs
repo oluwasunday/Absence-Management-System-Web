@@ -1,4 +1,5 @@
 ﻿using AbsenceManagementSystem.Model.DTOs;
+using AbsenceManagementSystem.Model.Enums;
 using AbsenceManagementSystem.Model.Utilities;
 using AbsenceManagementSystem.Model.ViewModels;
 using AbsenceManagementSystem.Services.Implementations;
@@ -80,6 +81,15 @@ namespace AbsenceManagementSystemWeb.Controllers
             if (user == null)
                 return RedirectToAction("Login", "Authentication");
 
+            request.EmployeeId = user.Id;
+            request.EmployeeName = user.FullName;
+
+            var startDate = new DateTime(request.StartDate.Year, request.StartDate.Month, request.StartDate.Day, 0, 0, 0);
+            var endDate = new DateTime(request.EndDate.Year, request.EndDate.Month, request.EndDate.Day + 1, 0, 0, 0);
+            request.EndDate = endDate;
+            request.StartDate = startDate;
+            request.NumberOfDaysOff = (request.EndDate.Day - request.StartDate.Day);
+
             if (ModelState.IsValid)
             {
                 request.EmployeeId = user.Id;
@@ -93,7 +103,7 @@ namespace AbsenceManagementSystemWeb.Controllers
                 ViewBag.Error = response.Message;
                 return View();
             }
-            return RedirectToAction("Error");
+            return RedirectToAction("Error", ModelState.ValidationState.ToString());
         }
 
         public async Task<IActionResult> EmployeeLeaves()
@@ -111,6 +121,70 @@ namespace AbsenceManagementSystemWeb.Controllers
                 return View(new EmployeeLeaveRequestViewModel { Requests = response.ToList() });
             }
             return View(response);
+        }
+
+        public async Task<IActionResult> PendingRequests()
+        {
+            HttpContext.Session.SetString("PageTitle", "Pending Requests");
+
+            var authenticatedUser = HttpContext.Session.GetString("User");
+            var user = authenticatedUser != null ? JsonConvert.DeserializeObject<AuthenticatedUserDto>(authenticatedUser) : null;
+            if (user == null)
+                return RedirectToAction("Login", "Authentication");
+
+            var response = await _employeeLeaveService.GetPendingRequests();
+            if (response != null)
+            {
+                return View(new PendingRequestsViewModel { Requests = response.ToList() });
+            }
+            return View(response);
+        }
+
+        //[HttpPost]
+        public async Task<IActionResult> ApproveLeave(string requestId)
+        {
+            HttpContext.Session.SetString("PageTitle", "Pending Requests");
+
+            var authenticatedUser = HttpContext.Session.GetString("User");
+            var user = authenticatedUser != null ? JsonConvert.DeserializeObject<AuthenticatedUserDto>(authenticatedUser) : null;
+            if (user == null)
+                return RedirectToAction("Login", "Authentication");
+
+            var payload = new UpdateEmployeeLeaveRequesDto()
+            {
+                Id = requestId,
+                Status = LeaveStatus.Approved,
+            };
+
+            var response = await _employeeLeaveService.UpdateRequests(payload);
+            if (response.Succeeded)
+            {
+                return View();
+            }
+            return RedirectToAction("Error", response.Message);
+        }
+
+        public async Task<IActionResult> RejectLeave(string requestId)
+        {
+            HttpContext.Session.SetString("PageTitle", "Pending Requests");
+
+            var authenticatedUser = HttpContext.Session.GetString("User");
+            var user = authenticatedUser != null ? JsonConvert.DeserializeObject<AuthenticatedUserDto>(authenticatedUser) : null;
+            if (user == null)
+                return RedirectToAction("Login", "Authentication");
+
+            var payload = new UpdateEmployeeLeaveRequesDto()
+            {
+                Id = requestId,
+                Status = LeaveStatus.Rejected,
+            };
+
+            var response = await _employeeLeaveService.UpdateRequests(payload);
+            if (response.Succeeded)
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Error", response.Message);
         }
 
         public IActionResult Privacy()

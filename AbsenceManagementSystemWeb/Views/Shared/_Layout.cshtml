@@ -288,12 +288,12 @@
                                                 <p>Employees on Leave</p>
                                             </a>
                                         </li>
-                                        @*<li class="nav-item">
-                                            <a href="pages/layout/top-nav.html" class="nav-link">
+                                        <li class="nav-item">
+                                            <a asp-controller="EmployeeLeave" asp-action="PendingRequests" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
-                                                <p>Review</p>
+                                                <p>Pending Requests</p>
                                             </a>
-                                        </li>*@
+                                        </li>
                                         <li class="nav-item">
                                             <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
@@ -304,7 +304,6 @@
                                     </ul>
                                 </li>
                                 <li class="nav-item">
-                                    @*<a href="pages/layout/top-nav-sidebar.html" class="nav-link">*@
                                     <a asp-controller="Authentication" asp-action="Logout" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Log Out</p>
@@ -319,12 +318,12 @@
                                         <p>Dashboard</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                @*<li class="nav-item">
                                     <a asp-controller="EmployeeLeave" asp-action="EmployeeLeaves" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>My leave</p>
                                     </a>
-                                </li>
+                                </li>*@
                                 <li class="nav-item">
                                     <a asp-controller="EmployeeLeave" asp-action="AddNewLeaveRequest" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>

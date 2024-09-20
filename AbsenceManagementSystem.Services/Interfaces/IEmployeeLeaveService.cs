@@ -11,5 +11,7 @@ namespace AbsenceManagementSystem.Services.Interfaces
         Task<bool> UpdateLeaveRequests(UpdateLeaveRequesDto employeeLeave);
         Task<IEnumerable<EmployeeLeaveRequesResponseDto>> GetEmployeeLeavesByEmployeeIdAsync(string employeeId);
         Task<Response<EmployeeDto>> RequestNewLeaveAsync(EmployeeLeaveRequestDto request);
+        Task<List<EmployeeLeaveRequesResponseDto>> GetPendingRequests();
+        Task<Response<bool>> UpdateRequests(UpdateEmployeeLeaveRequesDto payload);
     }
 }
