@@ -51,7 +51,7 @@ namespace AbsenceManagementSystemWeb.Controllers
             var employeesToGoOnLeaveSoon = await _employeeService.EmployeesToGoOnLeaveSoon();
             if(employeesToGoOnLeaveSoon != null)
             {
-                data.EmployeesToGoOnLeaveSoon = employeesToGoOnLeaveSoon;
+                data.EmployeesToGoOnLeaveSoon = employeesToGoOnLeaveSoon ?? new List<EmployeeLeavePredictResponse>();
             }
 
             return View(data);
