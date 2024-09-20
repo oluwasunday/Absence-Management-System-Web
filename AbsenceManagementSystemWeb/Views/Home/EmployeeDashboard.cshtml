@@ -147,8 +147,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (Model != null && Model.LeaveRecords.Any())
-                        {
+                   @*     @if ( Model.LeaveRecords.Any())
+                        {*@
                             @foreach (var employee in Model.LeaveRecords)
                             {
                                 <tr>
@@ -176,7 +176,7 @@
                                     </td>
                                 </tr>
                             }
-                        }
+                       @* }*@ 
                         
 
 

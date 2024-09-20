@@ -18,7 +18,7 @@ namespace AbsenceManagementSystem.Model.ViewModels
     public class EmployeeDashboard
     {
         public int TotalLeaveRemaining { get; set; }
-        public List<EmployeeLeaveRequesResponse2Dto> LeaveRecords { get; set; }
+        public List<EmployeeLeaveRequesResponse2Dto> LeaveRecords { get; set; } =new List<EmployeeLeaveRequesResponse2Dto>();
     }
 
     public class EmployeeLeavePredictResponse

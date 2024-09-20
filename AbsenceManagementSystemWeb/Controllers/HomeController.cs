@@ -75,7 +75,7 @@ namespace AbsenceManagementSystemWeb.Controllers
             var employees = await _employeeService.GetEmployeeDashboardInfoAsync();
             if (employees != null)
             {
-                data.LeaveRecords = employees.LeaveRecords;
+                data.LeaveRecords = employees.LeaveRecords ?? new List<EmployeeLeaveRequesResponse2Dto>();
             }
 
             if(user != null)
