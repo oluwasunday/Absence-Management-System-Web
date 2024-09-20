@@ -10,7 +10,7 @@
     <div class="col-md-4">
         <form asp-action="AddNewLeaveRequest">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="EmployeeId" class="control-label"></label>
                 <input asp-for="EmployeeId" class="form-control" />
                 <span asp-validation-for="EmployeeId" class="text-danger"></span>
@@ -19,7 +19,7 @@
                 <label asp-for="EmployeeName" class="control-label"></label>
                 <input asp-for="EmployeeName" class="form-control" />
                 <span asp-validation-for="EmployeeName" class="text-danger"></span>
-            </div>
+            </div> *@
             <div class="form-group">
                 <label asp-for="StartDate" class="control-label"></label>
                 <input asp-for="StartDate" class="form-control" />
@@ -30,14 +30,21 @@
                 <input asp-for="EndDate" class="form-control" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="NumberOfDaysOff" class="control-label"></label>
                 <input asp-for="NumberOfDaysOff" class="form-control" />
                 <span asp-validation-for="NumberOfDaysOff" class="text-danger"></span>
-            </div>
+            </div> *@
             <div class="form-group">
                 <label asp-for="LeaveType" class="control-label"></label>
-                <input asp-for="LeaveType" class="form-control" />
+                @* <select asp-for="LeaveType" class="form-control" /> *@
+                <select asp-for="LeaveType" class="form-control">@*  style="width:100%; float:none;" class="form-control wide">*@
+                    <option selected value="1">Casual</option>
+                    <option value="2">Sick Leave</option>
+                    <option value="3">Vacation</option>
+                    <option value="4">Maternity</option>
+                    <option value="5">Paternity</option>
+                </select>
                 <span asp-validation-for="LeaveType" class="text-danger"></span>
             </div>
             <div class="form-group">

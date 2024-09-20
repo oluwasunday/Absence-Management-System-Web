@@ -81,5 +81,21 @@ namespace AbsenceManagementSystem.Services.Implementations
 
             return response.Data;
         }
+
+        public async Task<List<EmployeeLeaveRequesResponseDto>> GetPendingRequests()
+        {
+            string leaveBaseUrl = $"api/LeaveRequests/allpendingrequests";
+            var response = await _requestFactory.GetRequestAsync<Response<List<EmployeeLeaveRequesResponseDto>>>(requestUrl: leaveBaseUrl);
+
+            return response.Data;
+        }
+
+        public async Task<Response<bool>> UpdateRequests(UpdateEmployeeLeaveRequesDto payload)
+        {
+            string leaveBaseUrl = $"api/LeaveRequests";
+            var response = await _requestFactory.UpdateRequestAsync<UpdateEmployeeLeaveRequesDto, Response<bool>>(requestUrl: leaveBaseUrl, payload);
+
+            return response;
+        }
     }
 }

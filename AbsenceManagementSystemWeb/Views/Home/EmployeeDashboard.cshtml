@@ -79,7 +79,7 @@
 
 
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-8">
 
         @* TODO: to integrate later *@
         @* <div class="card">
@@ -167,12 +167,12 @@
                                         @employee.Status.ToString()
                                     </td>
                                     <td>
-                                        @* <span>
-                                <a asp-controller="Employee" asp-action="GetEmployeeById" asp-route-roomTypeId="@employee.EmployeeId"><i class="fas fa-search"></i></a>
-                                <a href="#" class="text-muted">
-                                <i class="fas fa-search"></i>
-                                </a>
-                                </span> *@
+                                        <span>
+                                            <a asp-controller="Employee" asp-action="GetEmployeeById" asp-route-roomTypeId="@employee.EmployeeId" title="edit"><i class="fas fa-edit"></i></a>
+                                            <a href="#" class="text-muted">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                             }
