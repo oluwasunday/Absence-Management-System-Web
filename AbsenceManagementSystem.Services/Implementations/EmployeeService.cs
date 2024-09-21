@@ -65,5 +65,12 @@ namespace AbsenceManagementSystem.Services.Implementations
 
             return response;
         }
+
+        public async Task<Response<LeaveEntitlementViewModel>> GetEmployeeLeaveEntitlementAsync()
+        {
+            var response = await _requestFactory.GetRequestAsync<Response<LeaveEntitlementViewModel>>(requestUrl: baseUrl + "/employeeleaveentitlement");
+
+            return response;
+        }
     }
 }

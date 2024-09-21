@@ -1,5 +1,6 @@
 ﻿using AbsenceManagementSystem.Model.DTOs;
 using AbsenceManagementSystem.Model.ViewModels;
+using AbsenceManagementSystem.Services.Implementations;
 using AbsenceManagementSystem.Services.Interfaces;
 using AbsenceManagementSystemWeb.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +13,13 @@ namespace AbsenceManagementSystemWeb.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IEmployeeService _employeeService;
+        private readonly IEmployeeLeaveService _employeeLeaveService;
 
-        public HomeController(ILogger<HomeController> logger, IEmployeeService employeeService)
+        public HomeController(ILogger<HomeController> logger, IEmployeeService employeeService, IEmployeeLeaveService employeeLeaveService)
         {
             _logger = logger;
             _employeeService = employeeService;
+            _employeeLeaveService = employeeLeaveService;
         }
 
         public async Task<IActionResult> Index(AdminDashboard data)
@@ -76,10 +79,26 @@ namespace AbsenceManagementSystemWeb.Controllers
             }
             var user = authenticatedUser != null ? JsonConvert.DeserializeObject<AuthenticatedUserDto>(authenticatedUser) : null;
 
+            if (user == null)
+                return RedirectToAction("Login", "Authentication");
+
+            var response = await _employeeLeaveService.GetEmployeeLeavesByEmployeeIdAsync(user.Id);
+
             var employees = await _employeeService.GetEmployeeDashboardInfoAsync();
-            if (employees != null)
+            if (response != null)
             {
-                data.LeaveRecords = employees.LeaveRecords ?? new List<EmployeeLeaveRequesResponse2Dto>();
+                data.LeaveRecords = response.Select(x => new EmployeeLeaveRequesResponse2Dto
+                {
+                    EmployeeId = x.EmployeeId,
+                    EmployeeName = x.EmployeeName,
+                    EndDate = x.EndDate,
+                    NumberOfDaysOff = x.NumberOfDaysOff,
+                    Id = x.Id,
+                    LeaveType = x.LeaveType,
+                    RequestDate = x.RequestDate,
+                    StartDate = x.StartDate,
+                    Status = x.Status
+                }).ToList();// employees.LeaveRecords;
             }
 
             if(user != null)

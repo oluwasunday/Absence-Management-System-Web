@@ -15,11 +15,13 @@ namespace AbsenceManagementSystemWeb.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IEmployeeLeaveService _employeeLeaveService;
+        private readonly IEmployeeService _employeeService;
 
-        public EmployeeLeaveController(ILogger<HomeController> logger, IEmployeeLeaveService employeeLeaveService)
+        public EmployeeLeaveController(ILogger<HomeController> logger, IEmployeeLeaveService employeeLeaveService, IEmployeeService employeeService)
         {
             _logger = logger;
             _employeeLeaveService = employeeLeaveService;
+            _employeeService = employeeService;
         }
 
         public async Task<IActionResult> Index()
@@ -85,10 +87,11 @@ namespace AbsenceManagementSystemWeb.Controllers
             request.EmployeeName = user.FullName;
 
             var startDate = new DateTime(request.StartDate.Year, request.StartDate.Month, request.StartDate.Day, 0, 0, 0);
-            var endDate = new DateTime(request.EndDate.Year, request.EndDate.Month, request.EndDate.Day + 1, 0, 0, 0);
+            var tempDate = request.EndDate.AddDays(1);
+            var endDate = new DateTime(tempDate.Year, tempDate.Month, tempDate.Day, 0, 0, 0);
             request.EndDate = endDate;
             request.StartDate = startDate;
-            request.NumberOfDaysOff = (request.EndDate.Day - request.StartDate.Day);
+            request.NumberOfDaysOff = (int)(request.EndDate - request.StartDate).TotalDays;
 
             if (ModelState.IsValid)
             {
@@ -97,7 +100,7 @@ namespace AbsenceManagementSystemWeb.Controllers
                 if (response.Succeeded)
                 {
                     ViewBag.Error = null;
-                    return RedirectToAction("EmployeeLeaves");
+                    return RedirectToAction("EmployeeDashboard", "Home");
                 }
 
                 ViewBag.Error = response.Message;
@@ -183,6 +186,33 @@ namespace AbsenceManagementSystemWeb.Controllers
             if (response.Succeeded)
             {
                 return RedirectToAction("Index");
+            }
+            return RedirectToAction("Error", response.Message);
+        }
+
+        public async Task<IActionResult> LeaveEntitlement()
+        {
+            HttpContext.Session.SetString("PageTitle", "Leave Entitlement");
+
+            var authenticatedUser = HttpContext.Session.GetString("User");
+            var user = authenticatedUser != null ? JsonConvert.DeserializeObject<AuthenticatedUserDto>(authenticatedUser) : null;
+            if (user == null)
+                return RedirectToAction("Login", "Authentication");
+
+            var response = await _employeeService.GetEmployeeLeaveEntitlementAsync();
+
+            if (response.Succeeded)
+            {
+                var leaveEntitled = new LeaveEntitlementViewModel()
+                {
+                    ContractType = response.Data.ContractType,
+                    EmployeeName = response.Data.EmployeeName,
+                    LeaveBalance = response.Data.LeaveBalance,
+                    TotalLeaveEntitled = response.Data.TotalLeaveEntitled,
+                    TotalLeavePending = response.Data.TotalLeavePending,
+                    TotalLeaveTaken = response.Data.TotalLeaveTaken
+                };
+                return View(leaveEntitled);
             }
             return RedirectToAction("Error", response.Message);
         }
