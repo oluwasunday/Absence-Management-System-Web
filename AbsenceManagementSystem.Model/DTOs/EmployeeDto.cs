@@ -24,6 +24,8 @@ namespace AbsenceManagementSystem.Model.DTOs
         public int TotalHolidayEntitlement { get; set; }
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public DateTime DateModified { get; set; } = DateTime.Now;
+        public int NumberOfDaysTaken { get; set; }
+        public int LeaveBalance { get; set; }
     }
 
     public class EmployeeDashboardDto

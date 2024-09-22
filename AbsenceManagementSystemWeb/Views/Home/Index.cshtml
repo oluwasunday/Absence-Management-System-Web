@@ -143,8 +143,10 @@
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Contract Type</th>
-                            <th>No. of Leave Entitled</th>
-                            <th>Actions</th>
+                            <th>No. of Leave</th>
+                            <th>No. of Leave Taken</th>
+                            <th>Leave Balance</th>
+                            @* <th>Actions</th> *@
                         </tr>
                     </thead>
                     <tbody>
@@ -166,13 +168,19 @@
                                     @employee.TotalHolidayEntitlement
                                 </td>
                                 <td>
+                                    @employee.NumberOfDaysTaken
+                                </td>
+                                <td>
+                                    @employee.LeaveBalance
+                                </td>
+                                @* <td>
                                     <span>
                                         <a asp-controller="Employee" asp-action="GetEmployeeById" asp-route-roomTypeId="@employee.EmployeeId"><i class="fas fa-search"></i></a>
                                         <a href="#" class="text-muted">
                                             <i class="fas fa-search"></i>
                                         </a>
                                     </span>
-                                </td>
+                                </td> *@
                             </tr>
                         }
 
