@@ -438,42 +438,6 @@
     @* <script src="dist/js/pages/dashboard.js"></script> *@
     <script src="~/js/sitejs/pages/dashboard.js"></script>
 
-
-
-
-    @* <script>
-        // Retrieve data on page load and insert it between <p> tags
-        $(document).ready(function () {
-
-            var currentRole = document.getElementById('temprole').value;
-
-            var inputValue = document.getElementById('inputField').value;
-            localStorage.setItem('temprole', inputValue);
-
-
-
-
-
-
-            var retrievedValue = localStorage.getItem("Username");
-            var roles = localStorage.getItem("Role");
-            if (retrievedValue) {
-                var paragraph = document.createElement("p");
-                paragraph.textContent = retrievedValue;
-                document.getElementById("username").appendChild(paragraph);
-            }
-        });
-
-        function getStoredRole() {
-            var storedRole = localStorage.getItem("Role");
-            return storedRole;
-        }
-    </script> *@
-
-
-
-
-
     <script src="~/plugins/chart.js/chart.min.js"></script>
 
     <script src="~/js/sitejs/demo.js"></script>

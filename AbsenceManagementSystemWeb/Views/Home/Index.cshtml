@@ -195,6 +195,14 @@
     <!-- /.col-md-6 -->
     <div class="col-lg-6">
 
+        <div class="card">
+            <canvas id="monthlyLeaveChart" width="400" height="200"></canvas>
+
+            
+        </div>
+
+
+
         @* TODO: to integrate later *@
         @* <div class="card">
             <div class="card-header border-0">
@@ -231,9 +239,10 @@
                         <i class="fas fa-square text-gray"></i> Last year
                     </span>
                 </div>
-            </div>
-        </div> *@
+            </div> *@
+        </div>
         <!-- /.card -->
+
 
         <div class="card">
             <div class="card-header border-0">
@@ -316,3 +325,34 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 @* <script src="dist/js/pages/dashboard.js"></script> *@
 <script src="~/js/sitejs/pages/dashboard3.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    var ctx = document.getElementById('monthlyLeaveChart').getContext('2d');
+
+    // Use Model to get Month names and Leave counts
+    var labels = @Html.Raw(Json.Serialize(Model.MonthlyLeaveData.Select(x => x.Month)));
+    var leaveData = @Html.Raw(Json.Serialize(Model.MonthlyLeaveData.Select(x => x.LeaveCount)));
+
+    var chart = new Chart(ctx, {
+        type: 'bar',  // You can also use 'line' for a line chart
+        data: {
+            labels: labels,  // Month names
+            datasets: [{
+                label: 'Number of Employees on Leave',
+                data: leaveData,  // Number of leave requests for each month
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

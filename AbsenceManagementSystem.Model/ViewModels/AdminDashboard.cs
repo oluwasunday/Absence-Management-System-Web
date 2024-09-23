@@ -13,6 +13,7 @@ namespace AbsenceManagementSystem.Model.ViewModels
         public string Role { get; set; }
         public List<EmployeeDto> Employees { get; set; }
         public List<EmployeeLeavePredictResponse> EmployeesToGoOnLeaveSoon { get; set; }
+        public List<MonthlyLeaveDataDto> MonthlyLeaveData { get; set; }
     }
 
     public class EmployeeDashboard

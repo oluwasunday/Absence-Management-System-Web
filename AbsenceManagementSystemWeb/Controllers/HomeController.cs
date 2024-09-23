@@ -61,6 +61,27 @@ namespace AbsenceManagementSystemWeb.Controllers
                 data.EmployeesToGoOnLeaveSoon =  new List<EmployeeLeavePredictResponse>();
             }
 
+
+
+            var leaveRequests = await _employeeLeaveService.GetAllLeaveRequest();
+           
+            var monthlyLeaveData = leaveRequests
+                .GroupBy(l => l.StartDate.Month)
+                .Select(g => new MonthlyLeaveDataDto
+                {
+                    Month = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(g.Key),
+                    LeaveCount = g.Count()
+                })
+                .OrderBy(x => DateTime.ParseExact(x.Month, "MMMM", System.Globalization.CultureInfo.InvariantCulture))
+                .ToList();
+
+            // Prepare month names for the chart
+            /*var months = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames
+                .Take(12) // Only the 12 months
+                .ToArray();*/
+
+            data.MonthlyLeaveData = monthlyLeaveData;
+
             return View(data);
         }
 
