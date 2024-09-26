@@ -87,12 +87,22 @@ namespace AbsenceManagementSystemWeb.Controllers
                 .OrderBy(x => DateTime.ParseExact(x.Month, "MMMM", System.Globalization.CultureInfo.InvariantCulture))
                 .ToList();
 
-            // Prepare month names for the chart
-            /*var months = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames
-                .Take(12) // Only the 12 months
-                .ToArray();*/
+
+            var sixMonthsAgo = DateTime.Now.AddMonths(-6);
+            // Filter the leave requests from the last six months and group by LeaveType
+            var pieChartForLeaveTypeData = leaveRequests
+                .Where(l => l.StartDate >= sixMonthsAgo) // Only consider leave requests in the last six months
+                .GroupBy(l => l.LeaveType)
+                .Select(g => new PieChartLeaveDataDto
+                {
+                    LeaveType = g.Key.ToString(),
+                    LeaveCount = g.Count()
+                })
+                .ToList();
+
 
             data.MonthlyLeaveData = monthlyLeaveData;
+            data.PieChartLeaveDataDto = pieChartForLeaveTypeData;
 
             return View(data);
         }
