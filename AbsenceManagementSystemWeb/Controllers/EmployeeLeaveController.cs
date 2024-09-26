@@ -162,7 +162,7 @@ namespace AbsenceManagementSystemWeb.Controllers
             var response = await _employeeLeaveService.UpdateRequests(payload);
             if (response.Succeeded)
             {
-                return View();
+                return RedirectToAction("Index", "Home");
             }
             return RedirectToAction("Error", response.Message);
         }

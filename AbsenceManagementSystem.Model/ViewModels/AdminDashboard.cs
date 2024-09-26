@@ -15,6 +15,14 @@ namespace AbsenceManagementSystem.Model.ViewModels
         public List<EmployeeLeavePredictResponse> EmployeesToGoOnLeaveSoon { get; set; }
         public List<MonthlyLeaveDataDto> MonthlyLeaveData { get; set; }
     }
+    public class AdminDashboardItemCount
+    {
+        public string UserId { get; set; }
+        public int NumberOfEmployees { get; set; }
+        public int EmployeesOnCasualLeave { get; set; }
+        public int EmployeesOnSickLeave { get; set; }
+        public int PendingLeave { get; set; }
+    }
 
     public class EmployeeDashboard
     {

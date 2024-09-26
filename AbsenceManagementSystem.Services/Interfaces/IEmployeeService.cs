@@ -12,5 +12,6 @@ namespace AbsenceManagementSystem.Services.Interfaces
         Task<EmployeeDashboardDto> GetEmployeeDashboardInfoAsync();
         Task<List<EmployeeLeavePredictResponse>> EmployeesToGoOnLeaveSoon();
         Task<Response<LeaveEntitlementViewModel>> GetEmployeeLeaveEntitlementAsync();
+        Task<Response<AdminDashboardItemCount>> EmployeesInfoForAdminDashboard();
     }
 }

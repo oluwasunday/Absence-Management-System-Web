@@ -30,8 +30,8 @@
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Date Requested</th>
-                            <th>No. of Leave Days</th>
                             <th>Leave Type</th>
+                            <th>No. of Leave Days</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -56,6 +56,9 @@
                                 </td>
                                 <td>
                                     @employee.NumberOfDaysOff
+                                </td>
+                                <td>
+                                    @employee.Status.ToString()
                                 </td>
                                 <td>
                                     <span>

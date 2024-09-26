@@ -66,6 +66,14 @@ namespace AbsenceManagementSystem.Services.Implementations
             return response;
         }
 
+        public async Task<Response<AdminDashboardItemCount>> EmployeesInfoForAdminDashboard()
+        {
+            string apiUrl = baseUrl + "/employeesinfoforadmindashboard/counts";// $"api/employeesinfoforadmindashboard/counts";
+            var response = await _requestFactory.GetRequestAsync<Response<AdminDashboardItemCount>>(requestUrl: apiUrl);
+
+            return response;
+        }
+
         public async Task<Response<LeaveEntitlementViewModel>> GetEmployeeLeaveEntitlementAsync()
         {
             var response = await _requestFactory.GetRequestAsync<Response<LeaveEntitlementViewModel>>(requestUrl: baseUrl + "/employeeleaveentitlement");

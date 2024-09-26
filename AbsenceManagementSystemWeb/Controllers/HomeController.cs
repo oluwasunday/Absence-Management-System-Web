@@ -41,6 +41,18 @@ namespace AbsenceManagementSystemWeb.Controllers
                 data.Employees = employees.Take(5).OrderByDescending(x => x.DateCreated).ToList();
             }
 
+            if(data != null && data.EmployeesOnCasualLeave == 0)
+            {
+                var dashboardCounts = await _employeeService.EmployeesInfoForAdminDashboard();
+                if (dashboardCounts != null)
+                {
+                    data.EmployeesOnCasualLeave = dashboardCounts.Data.EmployeesOnCasualLeave;
+                    data.NumberOfEmployees = dashboardCounts.Data.NumberOfEmployees;
+                    data.PendingLeave = dashboardCounts.Data.PendingLeave;
+                    data.EmployeesOnSickLeave = dashboardCounts.Data.EmployeesOnSickLeave;
+                }
+            }
+
             if(user != null)
             {
                 data.Username = username;
