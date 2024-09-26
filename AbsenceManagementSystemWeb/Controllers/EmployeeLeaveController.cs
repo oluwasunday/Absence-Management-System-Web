@@ -38,7 +38,7 @@ namespace AbsenceManagementSystemWeb.Controllers
 
         public async Task<IActionResult> AllPendingLeaveRequests()
         {
-            HttpContext.Session.SetString("PageTitle", "EmployeeLeaves");
+            HttpContext.Session.SetString("PageTitle", "Employees On Leave");
             var requests = await _employeeLeaveService.GetAllPendingLeaveRequest();
             if (requests != null)
             {
