@@ -116,6 +116,14 @@ namespace AbsenceManagementSystemWeb.Controllers
             var role = HttpContext.Session.GetString("UserRole");
             HttpContext.Session.SetString("PageTitle", "Dashboard");
 
+            var newerror = HttpContext.Session.GetString("newerror");
+            var success = ViewBag.Success;
+            var error = ViewBag.Error;
+            ViewBag.Success = success;
+            ViewBag.Error = newerror;
+
+
+
             if (authenticatedUser == null)
             {
                 return RedirectToAction("Login", "Authentication");

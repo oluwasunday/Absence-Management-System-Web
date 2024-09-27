@@ -7,6 +7,7 @@ using AbsenceManagementSystem.Services.Interfaces;
 using AbsenceManagementSystemWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 
 namespace AbsenceManagementSystemWeb.Controllers
@@ -78,6 +79,13 @@ namespace AbsenceManagementSystemWeb.Controllers
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> AddNewLeaveRequest(EmployeeLeaveRequestDto request)
         {
+            if(request.EndDate < request.StartDate)
+            {
+                ViewBag.Error = "Invalid start date and end date. Start date should not be higher the End date";
+                return View();
+            }
+
+            //throw new Exception();
             var authenticatedUser = HttpContext.Session.GetString("User");
             var user = authenticatedUser != null ? JsonConvert.DeserializeObject<AuthenticatedUserDto>(authenticatedUser) : null;
             if (user == null)
@@ -215,6 +223,30 @@ namespace AbsenceManagementSystemWeb.Controllers
                 return View(leaveEntitled);
             }
             return RedirectToAction("Error", response.Message);
+        }
+
+        public async Task<IActionResult> DeleteLeaveRequest(string requestId)
+        {
+            HttpContext.Session.SetString("PageTitle", "Dashboard");
+
+            var authenticatedUser = HttpContext.Session.GetString("User");
+            var user = authenticatedUser != null ? JsonConvert.DeserializeObject<AuthenticatedUserDto>(authenticatedUser) : null;
+            if (user == null)
+                return RedirectToAction("Login", "Authentication");
+
+            var response = await _employeeLeaveService.DeleteLeaveRequest(requestId);
+
+            if (response != null && response.Succeeded)
+            {
+                ViewBag.Success = "Request successfully deleted!";
+                return RedirectToAction("EmployeeDashboard", "Home");
+            }
+
+            ViewBag.Error = $"Failed: {response?.Message ?? "something went wrong"}";
+            HttpContext.Session.SetString("newerror", $"Failed: {response?.Message ?? "something went wrong"}");
+            //return View();
+            return RedirectToAction("EmployeeDashboard", "Home");
+            //return RedirectToAction("Error", response.Message);
         }
 
         public IActionResult Privacy()

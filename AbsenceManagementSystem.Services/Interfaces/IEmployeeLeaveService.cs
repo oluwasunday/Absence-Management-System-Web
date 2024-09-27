@@ -13,5 +13,6 @@ namespace AbsenceManagementSystem.Services.Interfaces
         Task<Response<EmployeeDto>> RequestNewLeaveAsync(EmployeeLeaveRequestDto request);
         Task<List<EmployeeLeaveRequesResponseDto>> GetPendingRequests();
         Task<Response<bool>> UpdateRequests(UpdateEmployeeLeaveRequesDto payload);
+        Task<Response<bool>> DeleteLeaveRequest(string requestId);
     }
 }
