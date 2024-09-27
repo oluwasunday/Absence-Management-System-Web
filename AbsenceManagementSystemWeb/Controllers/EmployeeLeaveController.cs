@@ -26,7 +26,7 @@ namespace AbsenceManagementSystemWeb.Controllers
 
         public async Task<IActionResult> Index()
         {
-            HttpContext.Session.SetString("PageTitle", "EmployeeLeaves");
+            HttpContext.Session.SetString("PageTitle", "Employees On Leave");
             var requests = await _employeeLeaveService.GetAllLeaveRequest();
             if (requests != null)
             {
@@ -51,7 +51,7 @@ namespace AbsenceManagementSystemWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateLeaveRequest(UpdateLeaveRequesDto dto)
         {
-            HttpContext.Session.SetString("PageTitle", "EmployeeLeaves");
+            HttpContext.Session.SetString("PageTitle", "Employees On Leave");
             var response = await _employeeLeaveService.UpdateLeaveRequests(dto);
             if (response != null)
             {
