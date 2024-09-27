@@ -97,5 +97,13 @@ namespace AbsenceManagementSystem.Services.Implementations
 
             return response;
         }
+
+        public async Task<Response<bool>> DeleteLeaveRequest(string requestId)
+        {
+            string leaveBaseUrl = $"{baseUrl}/{requestId}";
+            var response = await _requestFactory.DeleteRequestAsync<Response<bool>>(requestUrl: leaveBaseUrl);
+
+            return response;
+        }
     }
 }

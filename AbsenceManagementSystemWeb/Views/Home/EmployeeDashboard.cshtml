@@ -4,11 +4,6 @@
     ViewData["Title"] = "Home Page";
 }
 
-@* <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div> *@
-
 
 
 <!-- Small top boxes (Stat box) -->
@@ -80,46 +75,7 @@
 
 <div class="row">
     <div class="col-lg-8">
-
-        @* TODO: to integrate later *@
-        @* <div class="card">
-        <div class="card-header border-0">
-        <div class="d-flex justify-content-between">
-        <h3 class="card-title">Online Store Visitors</h3>
-        <a href="javascript:void(0);">View Report</a>
-        </div>
-        </div>
-        <div class="card-body">
-        <div class="d-flex">
-        <p class="d-flex flex-column">
-        <span class="text-bold text-lg">820</span>
-        <span>Visitors Over Time</span>
-        </p>
-        <p class="ml-auto d-flex flex-column text-right">
-        <span class="text-success">
-        <i class="fas fa-arrow-up"></i> 12.5%
-        </span>
-        <span class="text-muted">Since last week</span>
-        </p>
-        </div>
-        <!-- /.d-flex -->
-
-        <div class="position-relative mb-4">
-        <canvas id="visitors-chart" height="200"></canvas>
-        </div>
-
-        <div class="d-flex flex-row justify-content-end">
-        <span class="mr-2">
-        <i class="fas fa-square text-primary"></i> This Week
-        </span>
-
-        <span>
-        <i class="fas fa-square text-gray"></i> Last Week
-        </span>
-        </div>
-        </div>
-        </div> *@
-        <!-- /.card -->
+        
 
         <div class="card" style="width: 150%">
             <div class="card-header border-0">
@@ -133,7 +89,23 @@
                     </a> *@
                 </div>
             </div>
+
             <div class="card-body table-responsive p-0">
+                @{
+                    var error = ViewBag.Error;
+                    var success = ViewBag.Success;
+
+                    if (error != null)
+                    {
+                        <p id="error" style="color:maroon; margin:20px;">@error</p>
+                    }
+                    if (success != null)
+                    {
+                        <div style="color:aquamarine">
+                            <p id="success" style="color:green; margin:20px;">@success</p>
+                        </div>
+                    }
+                }
                 <table class="table table-striped table-valign-middle">
                     <thead>
                         <tr>
@@ -169,7 +141,8 @@
                                     <td>
                                         <span>
                                             <a asp-controller="Employee" asp-action="GetEmployeeById" asp-route-roomTypeId="@employee.EmployeeId" title="edit"><i class="fas fa-edit"></i></a>
-                                            <a href="#" class="text-muted">
+                                        <a asp-controller="EmployeeLeave" asp-action="DeleteLeaveRequest" asp-route-requestId="@employee.Id" class="text-muted">
+                                            @* <a asp-controller="EmployeeLeave" asp-action="Index" class="nav-link"> *@
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                         </span>
@@ -294,3 +267,16 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 @* <script src="dist/js/pages/dashboard.js"></script> *@
 <script src="~/js/sitejs/pages/dashboard3.js"></script>
+
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $("#success").hide();
+        }, 10000);
+    });
+    $(document).ready(function () {
+        setTimeout(function () {
+            $("#error").hide();
+        }, 10000);
+    });
+</script>

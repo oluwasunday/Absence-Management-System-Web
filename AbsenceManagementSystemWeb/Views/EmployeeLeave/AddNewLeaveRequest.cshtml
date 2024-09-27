@@ -1,13 +1,21 @@
 ﻿@model AbsenceManagementSystem.Model.DTOs.EmployeeLeaveRequestDto
 
 @{
-    ViewData["Title"] = "Add New Employee";
+    ViewData["Title"] = "Add New Request";
 }
 
 <h4>Employee Leave Request</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
+        @{
+            var error = ViewBag.Error;
+
+            if (error != null)
+            {
+                <p style="color:maroon;">@error</p>
+            }
+        }
         <form asp-action="AddNewLeaveRequest">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @* <div class="form-group">

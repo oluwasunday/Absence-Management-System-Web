@@ -70,7 +70,7 @@
                             <th>Phone</th>
                             <th>Contract Type</th>
                             <th>No. of Leave Entitled</th>
-                            <th>Actions</th>
+                            @* <th>Actions</th> *@
                         </tr>
                     </thead>
                     <tbody>
@@ -91,14 +91,14 @@
                                 <td>
                                     @employee.TotalHolidayEntitlement
                                 </td>
-                                <td>
+                                @* <td>
                                     <span>
                                         <a asp-controller="Employee" asp-action="GetEmployeeById" asp-route-roomTypeId="@employee.EmployeeId"><i class="fas fa-search"></i></a>
                                         <a href="#" class="text-muted">
                                             <i class="fas fa-search"></i>
                                         </a>
                                     </span>
-                                </td>
+                                </td> *@
                             </tr>
                         }
 

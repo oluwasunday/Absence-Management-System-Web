@@ -162,44 +162,74 @@
     </div>
 
     <div class="col-lg-6">
-        @{
-            var leaveTypeLabels = @Html.Raw(Json.Serialize(Model.PieChartLeaveDataDto.Select(x => x.LeaveType)));
-            var leaveTypeCounts = @Html.Raw(Json.Serialize(Model.PieChartLeaveDataDto.Select(x => x.LeaveCount)));
-        }
+        @* <div style="width:60%">
+            @{
+                var leaveTypeLabels1 = @Html.Raw(Json.Serialize(Model.PieChartLeaveDataDto.Select(x => x.LeaveType)));
+                var leaveTypeCounts1 = @Html.Raw(Json.Serialize(Model.PieChartLeaveDataDto.Select(x => x.LeaveCount)));
+            }
 
-        <h2>Leave Requests by Type (Last 6 Months)</h2>
-        <canvas id="leaveTypePieChart" width="400" height="200"></canvas>
+            <h4>Leave Requests by Type (Last 6 Months)</h4>
+            <canvas id="leaveTypePieChart" width="400" height="200"></canvas>
+        </div> *@
+
+
+
+
+
+
+
+        <div class="card" style="width:100%">
+            <div class="card-header border-0">
+                <h3 class="card-title">Leave Requests by Type (Last 6 Months)</h3>
+                <div class="card-tools">
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div style="width:60%; margin:auto;">
+                    @{
+                        var leaveTypeLabels = @Html.Raw(Json.Serialize(Model.PieChartLeaveDataDto.Select(x => x.LeaveType)));
+                        var leaveTypeCounts = @Html.Raw(Json.Serialize(Model.PieChartLeaveDataDto.Select(x => x.LeaveCount)));
+                    }
+
+                    <canvas id="leaveTypePieChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+        
     </div>
     
 
 
 
-    <div class="card">
-        <div class="card-header border-0">
-            <h3 class="card-title">Top 5 Employees likely to go on leave</h3>
-            <div class="card-tools">
-                    
+    <div class="col-lg-6">
+        <div class="card" style="width:100%">
+            <div class="card-header border-0">
+                <h3 class="card-title">Top 5 Employees likely to go on leave soon</h3>
+                <div class="card-tools">
+                </div>
+            </div>
+
+            <div class="card-body">
+                @foreach (var employee in Model.EmployeesToGoOnLeaveSoon)
+                {
+                    <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+                        <p class="text-success text-xl">
+                            <i class="ion ion-ios-refresh-empty"></i>
+                        </p>
+                        <p class="d-flex flex-column text-right">
+                            @* <span class="font-weight-bold">
+                                <i class="ion ion-android-arrow-up text-success"></i> 12%
+                            </span> *@
+                            <span class="text-muted">@employee.EmployeeName</span>
+                        </p>
+                    </div>
+                    <!-- /.d-flex -->
+                }
             </div>
         </div>
-
-        <div class="card-body">
-            @foreach (var employee in Model.EmployeesToGoOnLeaveSoon)
-            {
-                <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                    <p class="text-success text-xl">
-                        <i class="ion ion-ios-refresh-empty"></i>
-                    </p>
-                    <p class="d-flex flex-column text-right">
-                        <span class="font-weight-bold">
-                            <i class="ion ion-android-arrow-up text-success"></i> 12%
-                        </span>
-                        <span class="text-muted">@employee.EmployeeName</span>
-                    </p>
-                </div>
-                <!-- /.d-flex -->
-            }
-        </div>
     </div>
+    
     </div>
     <!-- /.col-md-6 -->
 </div>
