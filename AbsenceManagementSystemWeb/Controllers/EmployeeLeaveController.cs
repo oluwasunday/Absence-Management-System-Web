@@ -111,7 +111,7 @@ namespace AbsenceManagementSystemWeb.Controllers
                     return RedirectToAction("EmployeeDashboard", "Home");
                 }
 
-                ViewBag.Error = response.Message;
+                ViewBag.Error = string.IsNullOrEmpty(response.Message) ? response.Errors : response.Message;
                 return View();
             }
             return RedirectToAction("Error", ModelState.ValidationState.ToString());
