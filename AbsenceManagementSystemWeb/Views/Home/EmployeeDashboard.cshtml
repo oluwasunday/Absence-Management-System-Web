@@ -140,7 +140,7 @@
                                     </td>
                                     <td>
                                         <span>
-                                            <a asp-controller="Employee" asp-action="GetEmployeeById" asp-route-roomTypeId="@employee.EmployeeId" title="edit"><i class="fas fa-edit"></i></a>
+                                            @* <a asp-controller="Employee" asp-action="GetEmployeeById" asp-route-roomTypeId="@employee.EmployeeId" title="edit"><i class="fas fa-edit"></i></a> *@
                                         <a asp-controller="EmployeeLeave" asp-action="DeleteLeaveRequest" asp-route-requestId="@employee.Id" class="text-muted">
                                             @* <a asp-controller="EmployeeLeave" asp-action="Index" class="nav-link"> *@
                                                 <i class="fas fa-trash"></i>

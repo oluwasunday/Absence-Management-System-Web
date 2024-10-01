@@ -79,7 +79,8 @@ namespace AbsenceManagementSystemWeb.Controllers
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> AddNewLeaveRequest(EmployeeLeaveRequestDto request)
         {
-            if(request.EndDate < request.StartDate)
+            HttpContext.Session.SetString("PageTitle", "Add Leave Request");
+            if (request.EndDate < request.StartDate)
             {
                 ViewBag.Error = "Invalid start date and end date. Start date should not be higher the End date";
                 return View();
